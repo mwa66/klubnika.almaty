@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кофейня Klubnika Almaty KZ</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffe6f2;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #ff99cc;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            animation: fadeIn 2s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        nav {
+            background-color: #ffccff;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            margin: 0 15px;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .menu-item {
+            background-color: #fff;
+            border: 2px solid #ff99cc;
+            border-radius: 10px;
+            margin: 15px;
+            padding: 20px;
+            width: 200px;
+            animation: slideIn 1s ease-in-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        .menu-item img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .menu-item h3 {
+            color: #ff66b2;
+            margin: 10px 0;
+        }
+        .menu-item p {
+            color: #666;
+        }
+        .menu-item .price {
+            font-size: 1.2em;
+            color: #ff66b2;
+            font-weight: bold;
+        }
+        .order-button {
+            background-color: #FFC0CB;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .order-button:hover {
+            background-color: #FF69B4;
+        }
+        footer {
+            background-color: #ff99cc;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .calculate-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 2px solid #ff99cc;
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 1000;
+            text-align: center;
+            width: 50%; /* Увеличена длина */
+            max-width: 1200px; /* Максимальная длина */
+        }
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 2px solid #ff99cc;
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 1000;
+            text-align: center;
+            width: 50%; /* Увеличена длина */
+            max-width: 1200px; /* Максимальная длина */
+        }
+        .modal-content {
+            display: block;
+        }
+        .close {
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: #f00;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .payment-button {
+            background-color: #FFC0CB;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .payment-button:hover {
+            background-color: #FF69B4;
+        }
+        .pickup-address,
+        .delivery-address,
+        .order-ready-message {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Кофейня "Klubnika Almaty KZ"</h1>
+    </header>
+    <nav>
+        <a href="main.html">Главная</a>
+        <a href="menu.html">Меню</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+    </nav>
+    <div class="content">
+        <h2 id="menu">Фрукты в шоколаде</h2>
+        <div class="menu">
+            <div class="menu-item" data-item="strawberry">
+                <img src="images/strawberry.jpg" alt="Клубника">
+                <h3>Клубника в шоколаде</h3>
+                <p>Идут в боксах от 9 до 30 штук и стоимость зависит от количества.</p>
+                <div class="price">от 3000 тг</div>
+                <button class="order-button" onclick="calculatePrice('Товар', 3000)">Рассчитать стоимость</button>
+            </div>
+            <div class="menu-item" data-item="banana">
+                <img src="images/banana.jpg" alt="Банан">
+                <h3>Банан в шоколаде</h3>
+                <p>Банан в бельгийском шоколаде идет в боксе от 4 до 8 штук.</p>
+                <div class="price">от 2000 тг</div>
+                <button class="order-button" onclick="calculatePrice('Товар', 2000)">Рассчитать стоимость</button>
+            </div>
+            <div class="menu-item" data-item="date">
+                <img src="images/finn.jpg" alt="Финики">
+                <h3>Финики в шоколаде</h3>
+                <p>Финики идут в коробочках от 5 до 15 штук.</p>
+                <div class="price">от 2500 тг</div>
+                <button class="order-button" onclick="calculatePrice('Товар', 2500)">Рассчитать стоимость</button>
+            </div>
+            <div class="menu-item" data-item="blueberry">
+                <img src="images/blue.jpg" alt="Голубика">
+                <h3>Голубика в шоколаде</h3>
+                <p>Голубика в шоколаде идет от 100 грамм до 1 кг.</p>
+                <div class="price">от 1500 тг</div>
+                <button class="order-button" onclick="calculatePrice('Товар', 1500)">Рассчитать стоимость</button>
+            </div>
+        </div>
+    </div>
+    <footer>
+        &copy; 2024 Кофейня "Klubnika Almaty KZ"
+    </footer>
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="calculate-modal" id="calculate-modal">
+        <h3>Рассчитать стоимость</h3>
+        <select id="quantity-select" onchange="updatePrice()"></select>
+        <div id="calculated-price" class="price"></div>
+        <button class="order-button" onclick="order()">Заказать</button>
+    </div>
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Выберите способ оплаты</h2>
+            <div>
+                <button class="payment-button" onclick="choosePayment('Карта')">Оплата картой</button>
+                <button class="payment-button" onclick="choosePayment('Наличные')">Оплата наличными</button>
+            </div>
+            <div class="pickup-address" id="pickupAddress">
+                <h3>Самовывоз</h3>
+                <p></p>
+                <p>Адрес: Алматы, ул. Гагарина, д. 83</p>
+            </div>
+            <div class="delivery-address" id="deliveryAddress">
+                <h3>Доставка</h3>
+                <p></p>
+                <input type="text" id="deliveryAddressInput" placeholder="Введите ваш адрес">
+                <button class="order-button" onclick="placeOrder()">Сделать заказ</button>
+            </div>
+            <div class="order-ready-message" id="orderReadyMessage">
+                <h3>Спасибо за ваш заказ!</h3>
+                <p id="orderMessage"></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        let selectedProduct = '';
+        let selectedPrice = 0;
+
+        function calculatePrice(product, basePrice) {
+            selectedProduct = product;
+            selectedPrice = basePrice;
+            let select = document.getElementById('quantity-select');
+            select.innerHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                let option = document.createElement('option');
+                option.value = i;
+                option.textContent = `${i} шт`;
+                select.appendChild(option);
+            }
+            updatePrice();
+            document.getElementById('calculate-modal').style.display = 'block';
+            document.getElementById('modal-backdrop').style.display = 'block';
+        }
+
+        function updatePrice() {
+            let quantity = document.getElementById('quantity-select').value;
+            let totalPrice = selectedPrice * quantity;
+            document.getElementById('calculated-price').textContent = `Стоимость: ${totalPrice} тг`;
+        }
+
+        function order() {
+            document.getElementById('calculate-modal').style.display = 'none';
+            document.getElementById('orderModal').style.display = 'block';
+            document.getElementById('modalTitle').textContent = `Оплатить ${selectedProduct}`;
+        }
+
+        function choosePayment(method) {
+            if (method === 'Карта') {
+                document.getElementById('deliveryAddress').style.display = 'block';
+                document.getElementById('pickupAddress').style.display = 'none';
+            } else {
+                document.getElementById('deliveryAddress').style.display = 'none';
+                document.getElementById('pickupAddress').style.display = 'block';
+                document.getElementById('orderReadyMessage').style.display = 'block';
+                document.getElementById('orderMessage').textContent = 'Ваш заказ будет готов через 15 минут. Спасибо за ваш заказ';
+            }
+        }
+
+        function placeOrder() {
+            let address = document.getElementById('deliveryAddressInput').value;
+            if (address) {
+                document.getElementById('orderReadyMessage').style.display = 'block';
+                document.getElementById('orderMessage').textContent = 'Ваш заказ будет доставлен через 30 минут. Спасибо за ваш заказ';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('orderModal').style.display = 'none';
+            document.getElementById('modal-backdrop').style.display = 'none';
+            document.getElementById('pickupAddress').style.display = 'none';
+            document.getElementById('deliveryAddress').style.display = 'none';
+            document.getElementById('orderReadyMessage').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
